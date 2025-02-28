@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function ap_chatbot_lumen_theme() {
+  return [
+    'ap_chatlumen_icon' => [
+      'variables' => [
+        'icon_url' => NULL, // Chat icon URL
+        'icon_alttext' => NULL, // Chat icon alt text
+        'attributes' => NULL, // Additional attributes for the icon
+      ],
+      'template' => 'ap-chatlumen-icon', // Matches the Twig template file name
+    ],
+    'ap_chat_modal' => [
+      'variables' => [
+        'customFields' => [], // Array of custom fields
+        'deploymentId' => NULL, // Deployment ID
+        'envName' => NULL, // Environment name
+        'site_name' => NULL,
+      ],
+      'template' => 'ap-chat-modal', // Matches the new Twig template file name
+    ],
+  ];
+}
+

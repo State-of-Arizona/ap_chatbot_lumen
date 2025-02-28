@@ -1,0 +1,9 @@
+# -- Defines `ap_chatbot_lumen` navigation items.
+ap_chatbot_lumen.settings:
+  path: '/admin/config/agencyplatform/chatbot-lumen'
+  defaults:
+    _form: '\Drupal\ap_chatbot_lumen\Form\LumenChatSettingsForm'
+    _title: 'Chat Bot (Lumen API) Settings'
+    name: 'Chat Bot (Lumen API) Settings'
+  requirements:
+    _permission: 'administer site configuration'

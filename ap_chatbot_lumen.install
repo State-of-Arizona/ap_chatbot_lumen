@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function ap_chatbot_lumen_install() {
+  \Drupal::configFactory()->getEditable('ap_chatbot_lumen.settings')->set('custom_fields', [])->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function ap_chatbot_lumen_uninstall() {
+  \Drupal::configFactory()->getEditable('ap_chatbot_lumen.settings')->delete();
+}

@@ -1,0 +1,5 @@
+ap_chatbot_lumen.admin:
+  title: Chat Bot (Lumen API) Settings
+  description: Configure the chat bot with Lumen information.
+  route_name: ap_chatbot_lumen.settings
+  parent: system.admin_config_services

@@ -1,0 +1,130 @@
+/* Center the card component in the middle of the screen */
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Make the card component responsive */
+@media only screen and (max-width: 992px) {
+  .card {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .card {
+    width: 90%;
+  }
+}
+
+/* Custom to ap_chatbot_lumen */
+
+.chatbubble {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.chatbubble.default {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 75px;
+  height: 75px;
+  background-color: #8A3A6D;
+  border-radius: 40%;
+  padding: 10px 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+}
+
+.chatbubble.custom-icon {
+  width: 150px;
+  height: 150px;
+}
+
+.chatbubble.custom-icon img {
+  filter: drop-shadow(0 0 7px rgba(0, 0, 0, 0.5));
+}
+
+.chat-popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 350px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: none;
+  z-index: 1000;
+}
+.chat-popup.open {
+  display: block;
+}
+
+.chat-popup-header {
+  background-color: #8A3A6D;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.chat-popup-header h5 {
+  text-align: left;
+  margin-right: 2rem;
+}
+
+.chat-popup-header button#close-chat-popup {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  text-overflow: clip;
+  overflow: unset;
+  align-items: center;
+  display: inline-flex;
+  font-weight: 600;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 28px;
+  border-radius: 0px;
+  cursor: pointer;
+  padding: 8px 10px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+}
+
+.chat-popup form {
+  padding: 10px;
+}
+
+.chat-popup .form-group {
+  margin-bottom: 15px;
+}
+
+.chat-popup .btn {
+  display: block;
+  width: 100%;
+}
+
+@media (max-width: 400px) {
+  .chatbubble.custom-icon {
+    width: 100px;
+    height: 100px;
+  }
+  .chat-popup {
+    width: 100%;
+    right: 0;
+  }
+  .chat-popup-header button#close-chat-popup {
+    font-size: 26px;
+    padding: 8px 20px;
+  }
+}

@@ -1,0 +1,45 @@
+<div id="chat-popup" class="chat-popup">
+  <div class="chat-popup-header">
+    <h5>{{ site_name }}</h5>
+    <button type="button" id="close-chat-popup" class="close" aria-label="{{ 'Close'|t }}">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form id="contactForm" class="needs-validation" novalidate>
+    {% for field in customFields %}
+      {% if field.type == 'text' %}
+        <div class="form-group">
+          <label for="{{ field.id }}">{{ field.label }}</label>
+          <input
+            type="text"
+            class="form-control"
+            id="{{ field.id }}"
+            name="{{ field.id }}"
+            placeholder="{{ field.required ? 'Required' : 'Optional' }}"
+            {% if field.required %}required{% endif %}
+            aria-label="{{ field.label }}"
+          />
+          <div class="invalid-feedback">{{ 'Please enter your ' ~ field.label|lower }}.</div>
+        </div>
+      {% elseif field.type == 'select' %}
+        <div class="form-group">
+          <label for="{{ field.id }}">{{ field.label }}</label>
+          <select
+            class="form-control"
+            id="{{ field.id }}"
+            name="{{ field.id }}"
+            {% if field.required %}required{% endif %}
+            aria-label="{{ field.label }}"
+          >
+            <option value="">{{ 'Choose an option'|t }}</option>
+            {% for option in field.options|split(',') %}
+              <option value="{{ option }}">{{ option }}</option>
+            {% endfor %}
+          </select>
+          <div class="invalid-feedback">{{ 'Please select a ' ~ field.label|lower }}.</div>
+        </div>
+      {% endif %}
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">{{ 'Submit'|t }}</button>
+  </form>
+</div>

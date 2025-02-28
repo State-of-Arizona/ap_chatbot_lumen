@@ -1,0 +1,16 @@
+chat_icon:
+  css:
+    component:
+      css/chat.css: {preprocess: false}
+  js:
+    js/chat.js: {preprocess: false}
+  dependencies:
+    - core/drupalSettings
+
+chatbot_init:
+  js:
+    js/chatbot-init.js: {preprocess: false}
+  header: true
+  dependencies:
+    - core/drupalSettings
+    - core/drupal

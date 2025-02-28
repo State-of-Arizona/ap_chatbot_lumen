@@ -1,0 +1,9 @@
+name: 'Chat Bot (Lumen API) | State of Arizona'
+type: module
+description: "Chat bot using Lumen's recommended configuration for State of Arizona sites."
+core_version_requirement: ^9
+package: Agency Platform
+version: 9.x-1.1
+
+dependencies:
+  - drupal:field
