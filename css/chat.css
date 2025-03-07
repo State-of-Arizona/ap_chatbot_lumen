@@ -1,3 +1,8 @@
+/*
+ * ---
+ * Chat bot styling from Lumen widget
+ * ---
+ */
 /* Center the card component in the middle of the screen */
 .card {
   position: absolute;
@@ -19,7 +24,11 @@
   }
 }
 
-/* Custom to ap_chatbot_lumen */
+/*
+ * ---
+ * Chat bot styling custom for module
+ * ---
+ */
 
 .chatbubble {
   position: fixed;
