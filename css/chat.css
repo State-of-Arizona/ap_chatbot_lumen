@@ -29,17 +29,18 @@
  * Chat bot styling custom for module
  * ---
  */
-
 .chatbubble {
+  
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 23px;
+  right: 28px;
   z-index: 100;
   cursor: pointer;
 }
 
 .chatbubble.default {
   display: flex;
+  z-index: 9999999;
   justify-content: center;
   align-items: center;
   width: 75px;
@@ -48,16 +49,13 @@
   border-radius: 40%;
   padding: 10px 15px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-
 }
 
-.chatbubble.custom-icon {
-  width: 150px;
-  height: 150px;
-}
 
-.chatbubble.custom-icon img {
+
+#ap-lumenchat.chatbubble.custom-icon img {
   filter: drop-shadow(0 0 7px rgba(0, 0, 0, 0.5));
+   width: 100px;
 }
 
 .chat-popup {
@@ -112,6 +110,7 @@
 
 .chat-popup form {
   padding: 10px;
+  color: #000; /* added color to labels */
 }
 
 .chat-popup .form-group {
@@ -137,3 +136,4 @@
     padding: 8px 20px;
   }
 }
+

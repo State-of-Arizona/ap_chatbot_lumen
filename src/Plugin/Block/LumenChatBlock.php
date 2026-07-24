@@ -90,6 +90,16 @@ class LumenChatBlock extends BlockBase {
         return $file->createFileUrl();
       }
     }
-    return \Drupal::service('extension.list.module')->getPath('ap_chatbot_lumen') . '/images/default-icon-chat.svg';
+
+// Get the module path using the service.
+$module_path = \Drupal::service('extension.list.module')->getPath('ap_chatbot_lumen');
+
+// Build the full file path.
+$image_path = '../' . $module_path . '/images/default-icon-chat.svg';
+
+// Example: return or use it.
+return $image_path;
+   
+   // return \Drupal::service('extension.list.module')->getPath('ap_chatbot_lumen') . '/images/default-icon-chat.svg';
   }
 }

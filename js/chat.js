@@ -1,110 +1,165 @@
+//Developer Deployment ID: 7d9c494c-8f36-4169-8414-12c25bd224d3
 (function (Drupal, drupalSettings) {
-  document.addEventListener("DOMContentLoaded", () => {
-    const chatPopup = document.querySelector("#chat-popup");
-    const chatButton = document.querySelector("#ap-lumenchat");
-    const form = document.querySelector("#contactForm");
-    const closeButton = document.querySelector("#close-chat-popup");
+  'use strict';
 
-    // Ensure chat popup and button exist
-    if (!chatPopup || !chatButton) {
-      console.error("Chat popup or button not found.");
-      return;
-    }
+  // Ensure Genesys command queue exists so events are safely queued before SDK boots
+  window.Genesys = window.Genesys || function () {
+    (Genesys.q = Genesys.q || []).push(arguments);
+  };
 
-    // Toggle chat popup on button click
-    if (chatButton) {
-      chatButton.addEventListener("click", () => {
-        chatPopup.style.display = chatPopup.style.display === "block" ? "none" : "block";
-        chatPopup.classList.toggle("open");
-      });
-    }
+  Drupal.behaviors.genesysChatIntegration = {
+    attach: function (context, settings) {
+      const chatPopup = context.querySelector("#chat-popup");
+      const chatButton = context.querySelector("#ap-lumenchat");
+      const form = context.querySelector("#contactForm");
+      const closeButton = context.querySelector("#close-chat-popup");
+      const customIcon = context.querySelector(".custom-icon");
+      const contain = context.querySelector(".container");
 
-    // Listen for Genesys Messenger events
-    if (window.Genesys) {
-      Genesys("subscribe", "Messenger.opened", () => {
-        console.log("Genesys chat opened.");
+      // Prevent duplicate attachment across Drupal AJAX refreshes
+      if (!chatButton || chatButton.dataset.initialized) {
+        return;
+      }
+      chatButton.dataset.initialized = "true"; 
+
+      // Display custom chat button and save state
+      function showChatButton() {
         if (chatButton) {
-          chatButton.style.display = "none"; // Hide custom chat button
+          chatButton.style.display = "flex";
         }
-      });
+        localStorage.setItem("genesys_chat_active", "false");
+      }
 
-      Genesys("subscribe", "Messenger.closed", () => {
-        console.log("Genesys chat closed.");
+      // Do not show custom chat button and save state
+      function hideChatButton() {
         if (chatButton) {
-          chatButton.style.display = "block"; // Show custom chat button
+          chatButton.style.display = "none";
         }
-      });
-    }
+        // Needed if user clicks another page within the site
+        localStorage.setItem("genesys_chat_active", "true");
+      }
 
-    // Close chat popup on close button click
-    if (closeButton) {
-      closeButton.addEventListener("click", () => {
-        chatPopup.style.display = "none";
-        chatPopup.classList.remove("open");
-      });
-    }
-
-    // Form handling for Genesys custom attributes
-    if (form) {
-      form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        if (!form.checkValidity()) {
-          // Mark form as validated for Bootstrap feedback
-          form.classList.add("was-validated");
+      // Initial state check on page load / navigation
+      if (contain && chatButton) {
+        contain.appendChild(chatButton);
+        
+        // If an active session was saved in localStorage, keep hidden. Otherwise, show button.
+        if (localStorage.getItem("genesys_chat_active") === "true") {
+          hideChatButton();
         } else {
-          const formData = new FormData(event.target);
-          const formProps = Object.fromEntries(formData.entries());
+          showChatButton();
+        }
+      }
 
-          // Dynamically build customAttributes from drupalSettings
-          const customAttributes = {};
-          const customFields = drupalSettings.apChatbotLumen?.customFields || [];
+      // Genesys Messenger Subscriptions  //
 
-          customFields.forEach((field) => {
-            if (field.mapping && field.id && formProps[field.id]) {
-              customAttributes[field.mapping] = formProps[field.id];
+      // Handle page refresh or direct SDK load when session already exists
+      Genesys("subscribe", "MessagingService.started", () => {
+        // If Genesys recognizes an existing session, ensure chatButton remains hidden
+        hideChatButton();
+      });
+
+      // Hide chatButton when Genesys opens
+      Genesys("subscribe", "Messenger.opened", () => {
+        console.log("Genesys Messenger opened.");
+        hideChatButton();
+      });
+
+      // Do NOTHING to chatButton when user simply minimizes/closes the Messenger window
+      Genesys("subscribe", "Messenger.closed", () => {
+        console.log("Genesys Messenger toggled.");
+      });
+
+      // Display custom chat button ONLY when user explicitly terminates/clears the conversation
+      Genesys("subscribe", "MessagingService.conversationCleared", () => {
+        console.log("Genesys Conversation terminated by user.");
+        
+        // Clear active session state and restore custom button
+        showChatButton(); 
+
+        // Reset lead form so it's fresh for next time
+        if (form) {
+          form.reset(); 
+          form.style.display = "block";
+        }
+      });
+
+      // Lumens Form and Popup Interactions //
+
+      chatButton.addEventListener("click", () => {
+        if (chatPopup) {
+          chatPopup.style.display = chatPopup.style.display === "block" ? "none" : "block";
+          chatPopup.classList.toggle("open");
+          hideChatButton();
+        }
+        if (form) {
+          form.style.display = "block";
+          if (customIcon) {
+            customIcon.classList.remove("default");
+          }
+        }
+      });
+
+      if (closeButton) {
+        closeButton.addEventListener("click", () => {
+          if (chatPopup) {
+            chatPopup.style.display = "none";
+            chatPopup.classList.remove("open");
+          }
+          showChatButton();
+        });
+      }
+
+      if (form) {
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          if (!form.checkValidity()) {
+            form.classList.add("was-validated");
+          } else {
+            const formData = new FormData(event.target);
+            const formProps = Object.fromEntries(formData.entries());
+
+            const customAttributes = {};
+            const customFields = drupalSettings.apChatbotLumen?.customFields || [];
+
+            customFields.forEach((field) => {
+              if (field.mapping && field.id && formProps[field.id]) {
+                customAttributes[field.mapping] = formProps[field.id];
+              }
+            });
+
+            Genesys("command", "Database.set", {
+              messaging: {
+                customAttributes: customAttributes,
+              },
+            });
+
+            if (chatPopup) { 
+              chatPopup.style.display = "none";
+              toggleMessenger();
             }
-          });
+          }
+        });
+      }
 
-          // Set custom attributes in Genesys Database
-          Genesys("command", "Database.set", {
-            messaging: {
-              customAttributes: customAttributes,
-            },
-          });
-
-          console.log("Custom attributes sent to Genesys:", customAttributes);
-
-          // Optionally close the popup after submission
-          chatPopup.style.display = "none";
-        }
-      });
-
-      // Listen for Genesys Database Updates
-      Genesys("subscribe", "Database.updated", function (e) {
-        console.log("Genesys database updated:", e.data);
-        toggleMessenger(); // Open Messenger chat window
-
-        // Hide or disable the form after submission
-        form.style.display = "none";
-      });
-    }
-
-    // Toggle Messenger Chat Window
-    function toggleMessenger() {
-      Genesys(
-        "command",
-        "Messenger.open",
-        {},
-        function () {
-          console.log("Genesys Messenger opened.");
-        },
-        function () {
-          Genesys("command", "Messenger.close");
-          console.log("Genesys Messenger closed.");
-        }
-      );
-    }
-  });
+      // Genesys Toggle
+      function toggleMessenger() {
+        Genesys(
+          "command",
+          "Messenger.open",
+          {},
+          function () {
+            console.log("Genesys Messenger opened.");
+            hideChatButton();
+          },
+          function (err) {
+            console.error("Genesys Messenger failed to open:", err);
+            showChatButton(); // Restoration fallback if Genesys fails
+          }
+        );
+      }
+    },
+  };
 })(Drupal, drupalSettings);
