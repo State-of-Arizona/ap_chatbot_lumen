@@ -27,7 +27,7 @@
         if (chatButton) {
           chatButton.style.display = "flex";
         }
-        localStorage.setItem("genesys_chat_active", "false");
+      sessionStorage.removeItem("genesys_chat_active");
       }
 
       // Do not show custom chat button and save state
@@ -36,22 +36,22 @@
           chatButton.style.display = "none";
         }
         // Needed if user clicks another page within the site
-        localStorage.setItem("genesys_chat_active", "true");
+        sessionStorage.setItem("genesys_chat_active", "true");
       }
 
       // Initial state check on page load / navigation
       if (contain && chatButton) {
         contain.appendChild(chatButton);
         
-        // If an active session was saved in localStorage, keep hidden. Otherwise, show button.
-        if (localStorage.getItem("genesys_chat_active") === "true") {
+        // If an active session was saved in sessionstorage, keep hidden. Otherwise, show button.
+        if (sessionStorage.getItem("genesys_chat_active") === "true") {
           hideChatButton();
         } else {
           showChatButton();
         }
       }
 
-      // Genesys Messenger Subscriptions  //
+      // --- Genesys Messenger Subscriptions --- //
 
       // Handle page refresh or direct SDK load when session already exists
       Genesys("subscribe", "MessagingService.started", () => {
@@ -84,7 +84,7 @@
         }
       });
 
-      // Lumens Form and Popup Interactions //
+      // --- Lead Form & Popup Interactions --- //
 
       chatButton.addEventListener("click", () => {
         if (chatPopup) {
