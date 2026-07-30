@@ -1,4 +1,3 @@
-//Developer Deployment ID: 7d9c494c-8f36-4169-8414-12c25bd224d3
 (function (Drupal, drupalSettings) {
   'use strict';
 
