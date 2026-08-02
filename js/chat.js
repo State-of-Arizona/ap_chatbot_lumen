@@ -17,6 +17,7 @@
 
       // Prevent duplicate attachment across Drupal AJAX refreshes
       if (!chatButton || chatButton.dataset.initialized) {
+      
         return;
       }
       chatButton.dataset.initialized = "true"; 
@@ -42,12 +43,11 @@
       if (contain && chatButton) {
         contain.appendChild(chatButton);
         
-        // If an active session was saved in sessionstorage, keep hidden. Otherwise, show button.
+        // If an active session was saved in sessionstorage show button.
         if (sessionStorage.getItem("genesys_chat_active") === "true") {
-          hideChatButton();
-        } else {
-          showChatButton();
-        }
+          console.log("where my button go 1");
+               showChatButton();
+        } 
       }
 
       // --- Genesys Messenger Subscriptions --- //
@@ -80,6 +80,7 @@
         if (form) {
           form.reset(); 
           form.style.display = "block";
+          console.log("where my button go");
         }
       });
 
