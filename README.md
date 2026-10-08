@@ -9,13 +9,14 @@ Agency Platform's Genesys Cloud module is to provide Arizona State Agency sites 
 
 ## Installing the Module
 ### Method: Composer (Recommended)
-1. Add `drupal-ap-module` as a composer installer-path to the site's root composer file, if it does not exist already.
+1. In the site's root composer file, under `repositories`, add `{"type": "vcs", "url": "https://github.com/State-of-Arizona/ap_genesys_cloud.git"}`
+2. Add `drupal-ap-module` as a composer installer-path to the site's root composer file, if it does not exist already.
    1. If using the Agency Platform distribution and on Drupal 11, this will already be done
    2. If not using the Agency Platform distribution, or on Drupal 9, the path can simply be `web/modules/custom/{$name}` or folder of choosing.
-2. In the composer project, run 
+3. In the composer project, run 
    1. `composer require state-of-arizona/ap_genesys_cloud:^2.0'` for production ready releases
    2. `composer require state-of-arizona/ap_genesys_cloud:^2.0@dev` for development testing releases
-3. Turn on the module at `admin/modules` page.
+4. Turn on the module at `admin/modules` page.
 
 ### Method: Manual/SFTP
 _Please note, this method will require you to return periodically for updates, if any are made._
