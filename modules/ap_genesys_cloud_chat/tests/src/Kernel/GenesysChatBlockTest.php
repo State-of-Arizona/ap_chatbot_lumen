@@ -205,7 +205,7 @@ class GenesysChatBlockTest extends KernelTestBase {
 
     $this->assertStringNotContainsString('javascript:', $style);
     $this->assertStringNotContainsString('display:none', $style);
-    $this->assertStringContainsString('--apgc-brand-color:#4A5568', $style);
+    $this->assertStringContainsString('--apgc-brand-color:#257976', $style);
     $this->assertStringContainsString('--apgc-text-color:#ffffff', $style);
   }
 
@@ -251,7 +251,7 @@ class GenesysChatBlockTest extends KernelTestBase {
     $build = $this->createBlock()->build();
     $style = (string) $build['ap_genesys_cloud_block']['#attached']['html_head'][0][0]['#value'];
 
-    $this->assertStringContainsString('--apgc-brand-color:#4A5568', $style);
+    $this->assertStringContainsString('--apgc-brand-color:#257976', $style);
     $this->assertStringContainsString('--apgc-text-color:#ffffff', $style);
   }
 
@@ -414,7 +414,7 @@ class GenesysChatBlockTest extends KernelTestBase {
     $build_a = $this->createBlock()->build();
     $build_b = $this->createBlock(['deployment' => 'area_b'])->build();
 
-    $this->assertStringContainsString('--apgc-brand-color:#4A5568', (string) $build_a['ap_genesys_cloud_block']['#attached']['html_head'][0][0]['#value']);
+    $this->assertStringContainsString('--apgc-brand-color:#257976', (string) $build_a['ap_genesys_cloud_block']['#attached']['html_head'][0][0]['#value']);
     $this->assertStringContainsString('--apgc-brand-color:#1B4F72', (string) $build_b['ap_genesys_cloud_block']['#attached']['html_head'][0][0]['#value']);
     $this->assertStringNotContainsString('area-b-chat', (string) $build_a['ap_genesys_cloud_block']['#attributes']);
     $this->assertStringContainsString('area-b-chat', (string) $build_b['ap_genesys_cloud_block']['#attributes']);

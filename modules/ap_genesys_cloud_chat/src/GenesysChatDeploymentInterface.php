@@ -27,7 +27,7 @@ interface GenesysChatDeploymentInterface extends ConfigEntityInterface {
    * A neutral, unbranded value, this module isn't tied to any one
    * agency's brand colours. Must match GenesysChatBlock::DEFAULT_BRAND_COLOR.
    */
-  const DEFAULT_BRAND_COLOR = '#4A5568';
+  const DEFAULT_BRAND_COLOR = '#257976';
 
   /**
    * The default icon/text colour shown over the brand colour.

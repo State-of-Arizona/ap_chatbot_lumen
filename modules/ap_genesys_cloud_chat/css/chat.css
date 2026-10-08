@@ -28,7 +28,7 @@
   justify-content: center;
   width: 75px;
   height: 75px;
-  background-color: var(--apgc-brand-color, #4A5568);
+  background-color: var(--apgc-brand-color, #257976);
   color: var(--apgc-text-color, #fff);
   border-radius: 40%;
   padding: 10px 15px;
@@ -68,7 +68,7 @@
 }
 
 .apgc-popup__header {
-  background-color: var(--apgc-brand-color, #4A5568);
+  background-color: var(--apgc-brand-color, #257976);
   color: var(--apgc-text-color, #fff);
   padding: 10px;
   text-align: center;
@@ -154,7 +154,7 @@
   display: block;
   width: 100%;
   padding: 8px 12px;
-  background-color: var(--apgc-brand-color, #4A5568);
+  background-color: var(--apgc-brand-color, #257976);
   color: var(--apgc-text-color, #fff);
   border: 0;
   border-radius: 4px;

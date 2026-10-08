@@ -287,7 +287,7 @@ class GenesysChatDeploymentBrandingForm extends EntityForm {
     $brand_color = (string) $form_state->getValue('brand_color');
     $brand_color_valid = (bool) preg_match(self::COLOR_PATTERN, $brand_color);
     if (!$brand_color_valid) {
-      $form_state->setErrorByName('brand_color', $this->t('Button & Header Color must be a valid hex colour (e.g. #4A5568).'));
+      $form_state->setErrorByName('brand_color', $this->t('Button & Header Color must be a valid hex colour (e.g. #257976).'));
     }
 
     // Icon & Text Colour is a free colour (not restricted to white/black),

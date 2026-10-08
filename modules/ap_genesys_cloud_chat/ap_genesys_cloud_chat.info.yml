@@ -1,11 +1,8 @@
-name: 'Chat Bot (Lumen API) - Genesys Cloud: Chat'
+name: 'Genesys Cloud/API - Chat'
 type: module
-description: 'The chat bot feature of Chat Bot (Lumen API) - Genesys Cloud: chat deployments and the Chat Icon block. Installed automatically with the parent module.'
+description: 'The chat bot feature of Genesys Cloud/API: chat deployments and the Chat Icon block. Installed automatically with the parent module.'
 core_version_requirement: ^9.3 || ^10 || ^11
-package: Lumen Chatbot
-# Installed by ap_genesys_cloud_install(), so it has no checkbox of its
-# own on the Extend page. It still appears on the Uninstall page, and must be
-# uninstalled before the parent module.
+package: Agency Platform
 hidden: true
 
 dependencies:

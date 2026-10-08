@@ -1,6 +1,3 @@
-# The chat deployment list, add, edit and delete routes come from the
-# entity type's AdminHtmlRouteProvider.
-
 entity.ap_genesys_deployment.branding_form:
   path: '/admin/config/services/ap-genesys-cloud/chat/manage/{ap_genesys_deployment}/branding'
   defaults:

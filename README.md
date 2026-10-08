@@ -9,7 +9,7 @@ Agency Platform's Genesys Cloud module is to provide Arizona State Agency sites 
 
 ## Installing the Module
 ### Method: Composer (Recommended)
-1. In the composer project, run `State-of-Arizona/ap_chatbot_lumen:^2.0'`
+1. In the composer project, run `State-of-Arizona/ap_genesys_cloud:^2.0'`
 2. Turn on the module at `admin/modules` page.
 
 ### Method: Manual/SFTP
@@ -25,7 +25,7 @@ _Please note, this method will require you to return periodically for updates, i
 
 Everything about one Genesys deployment -- its IDs, its lead-capture form, and how its chat icon looks -- lives on a **chat deployment**. Most sites need just one. Sites with a different deployment per area of the site add one per area (see below).
 
-1. After enabling the module, go to `admin/config/services/ap-genesys-cloud` (`Configuration > Web Services > Chat Bot (Lumen API) Settings`) and open **Chat deployments** (`admin/config/services/ap-genesys-cloud/chat`). Click **Add chat deployment** and give it a label (e.g. the area it serves, or just "Default").
+1. After enabling the module, go to `admin/config/services/ap-genesys-cloud` (`Configuration > Web Services > Genesys Cloud/API Settings`) and open **Chat deployments** (`admin/config/services/ap-genesys-cloud/chat`). Click **Add chat deployment** and give it a label (e.g. the area it serves, or just "Default").
 2. **Easiest path -> let the module read the file for you:** open **Import from Script**, paste the *entire* file the vendor provided, and click **Parse Script**. It extracts the Environment Name, Deployment ID, Bootstrap Script URL, and (best-effort) the lead-capture form's fields and their mapping keys, and fills them into the fields above for you to review. Nothing is saved until you click **Save** -- check the values, fix anything the parse couldn't figure out (it'll tell you what it missed), then save. This is meant for exactly the situation where nobody on hand wants to go read JavaScript by hand.
 3. **Or enter values by hand**, if you'd rather (or the parse missed something):
     1. **Environment Name** and **Deployment ID** -- look for the early `<script>` block in `<head>`, labeled `environment` and `deploymentId`. Don't copy the surrounding quotes.
@@ -40,7 +40,7 @@ Everything about one Genesys deployment -- its IDs, its lead-capture form, and h
         7. Reorder rows with "Show row weights."
 
        **If the provided file has no `<form>` at all** (just the bootstrap `<script>` block), leave "Chat Bot Fields" empty. Clicking the chat icon will open the Genesys Messenger directly instead of showing a lead-capture popup first.
-4. Saving a new chat deployment takes you to its **Branding** tab. Set **Button & Header Color** and **Icon & Text Color** to the brand colours for that deployment (these apply to the default icon, popup header, and submit button - an uploaded custom icon keeps its own colours), and optionally upload a custom **Chat Icon** (PNG, JPG, or SVG). The two colours are checked for contrast against each other; the sitewide **Accessibility** settings (listed next to **Chat deployments** on the landing page) control how strictly that's enforced for every chat deployment (off, warn, or block Save — targeting WCAG AA or AAA). If your theme should control the styling instead, see **Theming** below.
+4. Saving a new chat deployment takes you to its **Branding** tab. Set **Button & Header Color** and **Icon & Text Color** to the brand colours for that deployment (these apply to the default icon, popup header, and submit button - an uploaded custom icon keeps its own colours), and optionally upload a custom **Chat Icon** (PNG, JPG, or SVG). The two colours are checked for contrast against each other; the sitewide **Accessibility** settings (listed next to **Chat deployments** on the landing page) control how strictly that's enforced for every chat deployment (off, warn, or block Save; targeting WCAG AA or AAA). If your theme should control the styling instead, see **Theming** below.
 
 **In most cases, you'll only revisit a chat deployment when your chat vendor sends a new version of your script.** If there's a styling difference, let whoever maintains this module for your site know, so it can be updated where applicable.
 
@@ -80,7 +80,7 @@ While you're waiting on that to happen (or if a chat vendor hands off a script b
 ### Will this be part of the Agency Platform Distribution?
 The ultimate goal is to add this module to our existing distribution. We are currently testing it on some sites to verify consistency before we add it. It will be a future feature!
 ### Where can I submit a bug, issue, or feedback report?
-For those part of the OKTA single sign on, create a ticket for [Agency Platform at ServiceNow](https://azdoaprod.servicenowservices.com/esc?id=sc_cat_item&sys_id=3f1dd0320a0a0b99000a53f7604a2ef9). Be sure to mark the category as "Agency Platform Website". Otherwise, connect with the state help desk for further assistance to connecting with the Agency Platform team. Our team also welcomes developer feedback and reports on the [repository's issues page](https://github.com/State-of-Arizona/ap_chatbot_lumen/issues) via Github.
+For those part of the OKTA single sign on, create a ticket for [Agency Platform at ServiceNow](https://azdoaprod.servicenowservices.com/esc?id=sc_cat_item&sys_id=3f1dd0320a0a0b99000a53f7604a2ef9). Be sure to mark the category as "Agency Platform Website". Otherwise, connect with the state help desk for further assistance to connecting with the Agency Platform team. Our team also welcomes developer feedback and reports on the [repository's issues page](https://github.com/State-of-Arizona/ap_genesys_cloud/issues) via Github.
 
 ## AI Disclaimer
 Test processes under `*/tests/*` were assisted and reviewed with AI. While they work in a closed environment, there is always possibility that additional tweaking may be necessary, something did not work expectingly, or something might have been missed to check for with normal phpcs.
