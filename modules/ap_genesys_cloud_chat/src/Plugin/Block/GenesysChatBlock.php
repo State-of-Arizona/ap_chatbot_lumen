@@ -321,7 +321,7 @@ class GenesysChatBlock extends BlockBase implements ContainerFactoryPluginInterf
     ];
 
     // Omitted entirely (not just left empty) when the site has opted to use
-    // its theme's own colours instead
+    // its theme's own colours instead.
     if ($color_style !== NULL) {
       $build['ap_genesys_cloud_block']['#attached']['html_head'][] = [$color_style, 'ap_genesys_cloud_colors'];
     }
@@ -437,7 +437,7 @@ class GenesysChatBlock extends BlockBase implements ContainerFactoryPluginInterf
       if ($file) {
         // An uploaded SVG reuses the default icon's bubble styling (see
         // css/chat.css's .apgc-chatbubble.custom-svg rules) instead of the
-        // raster custom-icon treatment
+        // raster custom-icon treatment.
         $css_class = $file->getMimeType() === 'image/svg+xml' ? 'custom-svg' : 'custom-icon';
         return [
           'url' => $this->fileUrlGenerator->generateString($file->getFileUri()),
@@ -467,9 +467,9 @@ class GenesysChatBlock extends BlockBase implements ContainerFactoryPluginInterf
    * @return array|null
    *   A render array for use in #attached['html_head'], or NULL if the
    *   site has opted to use its theme's own colours instead (see
-   *   GenesysChatDeploymentBrandingForm's "Use theme default colours" option) --
-   *   in which case nothing should be injected at all, so the theme's
-   *   own CSS (or this module's own hardcoded fallback in chat.css) can
+   *   GenesysChatDeploymentBrandingForm's "Use theme default colours"
+   *   option) -- in which case nothing should be injected at all, so the
+   *   theme's own CSS (or this module's own hardcoded fallback in chat.css) can
    *   take effect.
    */
   protected function buildColorStyle(GenesysChatDeploymentInterface $deployment) {

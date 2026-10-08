@@ -37,13 +37,11 @@ class GenesysChatDeploymentBrandingForm extends EntityForm {
 
   /**
    * Regex a stored colour value must match before it is trusted.
-   *
    */
   const COLOR_PATTERN = '/^#[0-9a-f]{6}$/i';
 
   /**
    * Regex a stored custom CSS class must match before it is trusted.
-   *
    */
   const CSS_CLASS_PATTERN = '/^-?[_a-zA-Z][_a-zA-Z0-9-]*$/';
 
@@ -201,7 +199,7 @@ class GenesysChatDeploymentBrandingForm extends EntityForm {
       ]),
       '#default_value' => $text_color_default,
     ];
-    // Same hex-mirror pattern as brand_color_row above
+    // Same hex-mirror pattern as brand_color_row above.
     $form['customization']['text_color_row']['text_color_hex'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Icon & Text Color hex value'),
@@ -373,12 +371,31 @@ class GenesysChatDeploymentBrandingForm extends EntityForm {
       if (!$file) {
         continue;
       }
+      // An SVG can't be made safe without the sanitizer library, so refuse
+      // it rather than failing when sanitizeNewSvgIcon() runs.
+      if ($file->getMimeType() === 'image/svg+xml' && !$this->svgSanitizerAvailable()) {
+        $form_state->setErrorByName('chat_icon', $this->t('SVG chat icons need the enshrined/svg-sanitize library, which is not installed on this site. Upload a PNG or JPG icon instead, or ask the site maintainer to install the library.'));
+        $valid = FALSE;
+        continue;
+      }
       foreach ($this->getIconFileErrors($file) as $error) {
         $form_state->setErrorByName('chat_icon', $error);
         $valid = FALSE;
       }
     }
     return $valid;
+  }
+
+  /**
+   * Whether uploaded SVG icons can be sanitized on this site.
+   *
+   * A method of its own so tests can simulate the library being missing.
+   *
+   * @return bool
+   *   TRUE if enshrined/svg-sanitize is installed.
+   */
+  protected function svgSanitizerAvailable() {
+    return SvgIconSanitizer::isAvailable();
   }
 
   /**
@@ -435,7 +452,7 @@ class GenesysChatDeploymentBrandingForm extends EntityForm {
     if (class_exists(ByteSizeMarkup::class)) {
       return ByteSizeMarkup::create($bytes);
     }
-    // Only reached on cores before 10.2, where format_size() still exists
+    // Only reached on cores before 10.2, where format_size() still exists.
     return format_size($bytes);
   }
 

@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Drupal\ap_genesys_cloud_chat\Entity\GenesysChatDeployment;
 
 /**
- * Tests GenesysChatAccessibilitySettingsForm.
+ * Tests GenesysAccessibilitySettingsForm.
  *
  * @group ap_genesys_cloud
  */
@@ -53,7 +53,7 @@ class GenesysChatAccessibilitySettingsFormTest extends KernelTestBase {
    */
   protected function buildForm() {
     $form_state = new FormState();
-    return \Drupal::formBuilder()->buildForm('Drupal\ap_genesys_cloud\Form\GenesysChatAccessibilitySettingsForm', $form_state);
+    return \Drupal::formBuilder()->buildForm('Drupal\ap_genesys_cloud\Form\GenesysAccessibilitySettingsForm', $form_state);
   }
 
   /**

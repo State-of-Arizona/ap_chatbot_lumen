@@ -14,6 +14,20 @@ use enshrined\svgSanitize\Sanitizer;
 class SvgIconSanitizer {
 
   /**
+   * Whether the enshrined/svg-sanitize library is installed.
+   *
+   * It can be missing when the module was uploaded by hand rather than
+   * installed with Composer; ap_genesys_cloud's requirements check reports
+   * that, and the Branding form refuses SVG uploads instead of failing.
+   *
+   * @return bool
+   *   TRUE if the library's sanitizer class can be loaded.
+   */
+  public static function isAvailable(): bool {
+    return class_exists(Sanitizer::class);
+  }
+
+  /**
    * Sanitizes raw SVG markup.
    *
    * @param string $svg

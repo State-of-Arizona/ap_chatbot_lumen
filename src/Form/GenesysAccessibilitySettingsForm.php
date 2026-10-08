@@ -114,9 +114,11 @@ class GenesysAccessibilitySettingsForm extends ConfigFormBase {
     $form['wcag_level'] = [
       '#type' => 'radios',
       '#title' => $this->t('Target WCAG conformance level'),
-      // WCAG 2.1 and 2.2 use identical colour-contrast numbers, so a single choice covers both versions
-      // Level A isn't offered: WCAG has no minimum colour-contrast requirement at that level at
-      // all, so there would be nothing for the enforcement mode above to check.
+      // WCAG 2.1 and 2.2 use identical colour-contrast numbers, so a single
+      // choice covers both versions
+      // Level A isn't offered: WCAG has no minimum colour-contrast
+      // requirement at that level at all, so there would be nothing for the
+      // enforcement mode above to check.
       '#description' => $this->t('AA requires 4.5:1 contrast; AAA requires 7:1.'),
       '#options' => [
         'AA' => $this->t('2.1/2.2 AA'),

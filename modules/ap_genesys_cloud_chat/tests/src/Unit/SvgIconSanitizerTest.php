@@ -14,6 +14,13 @@ use Drupal\Tests\UnitTestCase;
 class SvgIconSanitizerTest extends UnitTestCase {
 
   /**
+   * The library is detected as installed (it's a test dependency here).
+   */
+  public function testIsAvailable() {
+    $this->assertTrue(SvgIconSanitizer::isAvailable());
+  }
+
+  /**
    * A benign SVG passes through with its visible content intact.
    */
   public function testBenignSvgIsPreserved() {

@@ -149,7 +149,7 @@ class GenesysChatDeploymentFormTest extends KernelTestBase {
       'bootstrap_url' => 'http://apps.use2.us-gov-pure.cloud/genesys-bootstrap/genesys.min.js',
     ]);
     $this->assertNotEmpty($form_state->getErrors());
-    $this->assertNull(GenesysChatsDeployment::load('benefits'));
+    $this->assertNull(GenesysChatDeployment::load('benefits'));
   }
 
   /**

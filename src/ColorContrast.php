@@ -6,7 +6,8 @@ namespace Drupal\ap_genesys_cloud;
  * WCAG relative-luminance contrast ratio calculations.
  *
  * Pure math, no Drupal dependencies.
- * TODO: Provide an APCA validation checker method.
+ *
+ * @todo Provide an APCA validation checker method.
  */
 class ColorContrast {
 

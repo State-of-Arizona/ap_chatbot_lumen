@@ -17,7 +17,6 @@ interface GenesysChatDeploymentInterface extends ConfigEntityInterface {
 
   /**
    * Regex a custom field's Field ID must match before it is trusted.
-   *
    */
   const FIELD_ID_PATTERN = '/^-?[_a-zA-Z][_a-zA-Z0-9-]*$/';
 

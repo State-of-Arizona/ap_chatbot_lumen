@@ -9,16 +9,22 @@ Agency Platform's Genesys Cloud module is to provide Arizona State Agency sites 
 
 ## Installing the Module
 ### Method: Composer (Recommended)
-1. In the composer project, run `State-of-Arizona/ap_genesys_cloud:^2.0'`
-2. Turn on the module at `admin/modules` page.
+1. Add `drupal-ap-module` as a composer installer-path to the site's root composer file, if it does not exist already.
+   1. If using the Agency Platform distribution and on Drupal 11, this will already be done
+   2. If not using the Agency Platform distribution, or on Drupal 9, the path can simply be `web/modules/custom/{$name}` or folder of choosing.
+2. In the composer project, run 
+   1. `composer require state-of-arizona/ap_genesys_cloud:^2.0'` for production ready releases
+   2. `composer require state-of-arizona/ap_genesys_cloud:^2.0@dev` for development testing releases
+3. Turn on the module at `admin/modules` page.
 
 ### Method: Manual/SFTP
 _Please note, this method will require you to return periodically for updates, if any are made._
-1. Download the zip file from Code > Download Zip.
-2. Extract it locally.
-3. Connect to your site through SFTP or git repository.
-4. Add the extracted folder to `web/modules/custom` folder, or where you currently store custom Drupal modules relative to your codebase.
-5. Turn on the module at `admin/modules` page.
+1. Install the library `enshrined/svg-sanitize` (1.0.0 or newer)
+2. Download this module's zip file from Code > Download Zip.
+3. Extract it locally.
+4. Connect to your site through SFTP or git repository.
+5. Add the extracted folder to `web/modules/custom` folder, or where you currently store custom Drupal modules relative to your codebase.
+6. Turn on the module at `admin/modules` page.
 
 ## Using the Module
 > AZNET II will provide the agency a file named `BSDChatv#.html`, we do not need the entire file for this module, only certain bits of information that is valuable to the agency directly.

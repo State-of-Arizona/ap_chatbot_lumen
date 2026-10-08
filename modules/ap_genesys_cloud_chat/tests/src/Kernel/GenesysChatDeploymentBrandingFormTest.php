@@ -55,7 +55,7 @@ class GenesysChatDeploymentBrandingFormTest extends KernelTestBase {
     $user->save();
     \Drupal::currentUser()->setAccount($user);
 
-      GenesysChatDeployment::create([
+    GenesysChatDeployment::create([
       'id' => 'area_a',
       'label' => 'Area A',
       'environment_name' => 'fedramp-use2',
@@ -347,7 +347,7 @@ class GenesysChatDeploymentBrandingFormTest extends KernelTestBase {
     $file = $this->createTestFile();
     $this->submit(['chat_icon' => ['fids' => (string) $file->id()]]);
 
-      GenesysChatDeployment::create([
+    GenesysChatDeployment::create([
       'id' => 'area_b',
       'label' => 'Area B',
       'environment_name' => 'fedramp-use2',
@@ -516,6 +516,52 @@ class GenesysChatDeploymentBrandingFormTest extends KernelTestBase {
 
     $svg_between_limits = $this->createTestFile(str_repeat('a', GenesysChatDeploymentBrandingForm::MAX_SVG_ICON_SIZE + 1), 'image/svg+xml', 'between.svg');
     $this->assertNotEmpty($form_object->getIconFileErrors($svg_between_limits));
+  }
+
+  /**
+   * Without the SVG sanitizer library, SVG uploads are refused, not fatal.
+   *
+   * The library can be missing when the module was uploaded by hand rather
+   * than installed with Composer. PNG/JPG icons still work.
+   */
+  public function testSvgRefusedWhenSanitizerLibraryMissing() {
+    $form_object = new class(
+            \Drupal::service('config.factory'),
+            \Drupal::service('file.usage'),
+        ) extends GenesysChatDeploymentBrandingForm {
+
+      /**
+       * {@inheritdoc}
+       */
+      protected function svgSanitizerAvailable() {
+        return FALSE;
+      }
+
+    };
+    $entity_type_manager = \Drupal::entityTypeManager();
+    $form_object->setStringTranslation(\Drupal::service('string_translation'));
+    $form_object->setModuleHandler(\Drupal::moduleHandler());
+    $form_object->setEntityTypeManager($entity_type_manager);
+    $form_object->setOperation('branding');
+
+    $svg = $this->createTestFile('<svg><circle cx="5" cy="5" r="4"/></svg>', 'image/svg+xml', 'refused.svg');
+    $form_object->setEntity($this->loadDeployment());
+    $form_state = (new FormState())->setValues(['chat_icon' => ['fids' => (string) $svg->id()], 'op' => 'Save'] + $this->baseValues);
+    \Drupal::formBuilder()->submitForm($form_object, $form_state);
+
+    $this->assertArrayHasKey('chat_icon', $form_state->getErrors());
+    $this->assertStringContainsString('enshrined/svg-sanitize', (string) $form_state->getErrors()['chat_icon']);
+    $this->assertFalse(File::load($svg->id())->isPermanent());
+    $this->assertSame([], $this->loadDeployment()->getChatIcon());
+
+    // A PNG is unaffected.
+    $png = $this->createTestFile('not really a png, just small', 'image/png', 'still-fine.png');
+    $form_object->setEntity($this->loadDeployment());
+    $form_state = (new FormState())->setValues(['chat_icon' => ['fids' => (string) $png->id()], 'op' => 'Save'] + $this->baseValues);
+    \Drupal::formBuilder()->submitForm($form_object, $form_state);
+
+    $this->assertEmpty($form_state->getErrors());
+    $this->assertSame([(int) $png->id()], $this->loadDeployment()->getChatIcon());
   }
 
   /**

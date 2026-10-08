@@ -5,6 +5,53 @@
  * Install and uninstall hooks for the Chat Bot - Genesys Cloud/API module.
  */
 
+use Drupal\Core\Extension\Requirement\RequirementSeverity;
+use Drupal\Core\Hook\Attribute\LegacyRequirementsHook;
+
+/**
+ * Implements hook_requirements().
+ *
+ * Refuses to install without the enshrined/svg-sanitize library, and reports
+ * it on the Status report.
+ *
+ * Drupal 11.3+ skips this legacy hook in favour of
+ * \Drupal\ap_genesys_cloud\Install\Requirements\GenesysCloudRequirements
+ * (install) and \Drupal\ap_genesys_cloud\Hook\GenesysCloudRequirementsHooks
+ * (runtime), which use the same requirement key. Keep the three in sync.
+ */
+#[LegacyRequirementsHook]
+function ap_genesys_cloud_requirements($phase) {
+  if (!in_array($phase, ['install', 'runtime'], TRUE)) {
+    return [];
+  }
+
+  // The install-time check can't use this module's own classes, which
+  // aren't autoloadable before it's installed.
+  $available = class_exists('enshrined\svgSanitize\Sanitizer');
+  if ($available && $phase === 'install') {
+    return [];
+  }
+
+  // The RequirementSeverity enum replaced the REQUIREMENT_* constants in
+  // Drupal 11.2.
+  $has_enum = class_exists(RequirementSeverity::class);
+  $requirement = [
+    'title' => t('Genesys Cloud/API: SVG sanitizer library'),
+    'severity' => $available
+      ? ($has_enum ? RequirementSeverity::OK : REQUIREMENT_OK)
+      : ($has_enum ? RequirementSeverity::Error : REQUIREMENT_ERROR),
+  ];
+  // The Status report shows a value; install-time messages reserve it for
+  // version numbers.
+  if ($phase === 'runtime') {
+    $requirement['value'] = $available ? t('Installed') : t('Missing');
+  }
+  if (!$available) {
+    $requirement['description'] = t('The Genesys Cloud/API module needs the enshrined/svg-sanitize PHP library to make uploaded SVG chat icons safe. Install the module with Composer, which adds the library automatically; run composer require enshrined/svg-sanitize in the site Composer project; or manually install this library.');
+  }
+  return ['ap_genesys_cloud_svg_sanitize' => $requirement];
+}
+
 /**
  * Implements hook_install().
  */

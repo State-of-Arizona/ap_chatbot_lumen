@@ -91,7 +91,7 @@ class GenesysChatDeploymentForm extends EntityForm {
       '#type' => 'machine_name',
       '#default_value' => $deployment->id(),
       // The profile's config name ('ap_genesys_cloud_chat.deployment.' plus
-      // this) is stored as its chat icon's file usage type
+      // this) is stored as its chat icon's file usage type.
       '#maxlength' => 28,
       '#machine_name' => [
         'exists' => [GenesysChatDeployment::class, 'load'],
@@ -175,7 +175,7 @@ class GenesysChatDeploymentForm extends EntityForm {
     // cycles; seed it from stored values only on the first build. Guard
     // against non-array values (e.g. stale config saved before this guard
     // existed) rather than just NULL, since #type 'table' can submit ''
-    // when it has zero rows
+    // when it has zero rows.
     $fields = $form_state->get('custom_fields');
     if (!is_array($fields)) {
       $fields = $defaults['custom_fields'] ?? [];
@@ -532,7 +532,8 @@ class GenesysChatDeploymentForm extends EntityForm {
     }
 
     // Only replace the custom fields table if the parse actually found
-    // rows. an empty result shouldn't wipe out fields the admin already configured or is mid-editing.
+    // rows. an empty result shouldn't wipe out fields the admin already
+    // configured or is mid-editing.
     if (!empty($result['custom_fields'])) {
       $form_state->set('custom_fields', $result['custom_fields']);
       unset($user_input['custom_fields']);

@@ -38,7 +38,7 @@ class GenesysChatBlockTest extends KernelTestBase {
     $this->installEntitySchema('user');
     $this->installSchema('file', ['file_usage']);
 
-      GenesysChatDeployment::create([
+    GenesysChatDeployment::create([
       'id' => 'area_a',
       'label' => 'Area A',
       'environment_name' => 'area-a-env',
