@@ -1,0 +1,11 @@
+# Per chat deployment tabs.
+ap_genesys_cloud_chat.deployment_edit_tab:
+  title: 'Deployment'
+  route_name: entity.ap_genesys_deployment.edit_form
+  base_route: entity.ap_genesys_deployment.edit_form
+
+ap_genesys_cloud_chat.deployment_branding_tab:
+  title: 'Branding'
+  route_name: entity.ap_genesys_deployment.branding_form
+  base_route: entity.ap_genesys_deployment.edit_form
+  weight: 5

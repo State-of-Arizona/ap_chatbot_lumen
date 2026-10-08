@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for the Genesys Cloud/API module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_help().
+ */
+function ap_genesys_cloud_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.ap_genesys_cloud':
+      $output = '<p>' . t('Genesys Cloud/API wraps a Genesys Cloud web messaging widget in a consistent, configurable way, so a site does not need the vendor-provided script hand-edited into a WYSIWYG editor.') . '</p>';
+      $output .= '<h3>' . t('Chat deployments') . '</h3>';
+      $output .= '<p>' . t('Each Genesys deployment the site uses is a <a href=":deployments">chat deployment</a>; most sites need just one. Each chat deployment has two tabs:', [
+        // Provided by the chat submodule, normally installed alongside.
+        ':deployments' => \Drupal::moduleHandler()->moduleExists('ap_genesys_cloud_chat')
+          ? Url::fromRoute('entity.ap_genesys_deployment.collection')->toString()
+          : Url::fromRoute('ap_genesys_cloud.admin')->toString(),
+      ]) . '</p>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('<strong>Deployment</strong> - the Genesys environment, deployment ID, bootstrap script URL, and the lead-capture form fields (or paste a vendor script and let the module fill these in for you).') . '</li>';
+      $output .= '<li>' . t('<strong>Branding</strong> - the chat icon, its alt text, colours, and theme-integration hooks (a custom CSS class, or handing colors off to the theme entirely).') . '</li>';
+      $output .= '</ul>';
+      $output .= '<p>' . t('The sitewide <a href=":accessibility">Accessibility</a> tab sets how strictly the colour-contrast check between the two Branding colours of each chat deployment is enforced, and against which WCAG level.', [
+        ':accessibility' => Url::fromRoute('ap_genesys_cloud.accessibility_settings')->toString(),
+      ]) . '</p>';
+      $output .= '<h3>' . t('Placing the chat') . '</h3>';
+      $output .= '<p>' . t('Place a <em>Chat Icon Block</em> via the block layout and select its chat deployment. To use different deployments in different areas of the site, place one block per area and use the visibility settings of each block. Only one chat deployment can run on a page.') . '</p>';
+      return $output;
+  }
+}

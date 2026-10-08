@@ -1,0 +1,4 @@
+administer ap genesys cloud settings:
+  title: 'Administer chatbot (Genesys Cloud) settings'
+  description: 'Configure the Genesys deployment, chat icon, and lead-capture form fields.'
+  restrict access: true

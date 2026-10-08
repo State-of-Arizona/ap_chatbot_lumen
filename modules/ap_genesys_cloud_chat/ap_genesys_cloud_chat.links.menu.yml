@@ -1,0 +1,6 @@
+ap_genesys_cloud_chat.deployments:
+  title: 'Chat deployments'
+  description: 'Genesys Cloud web messaging deployments, their lead-capture forms, and how their chat icon looks.'
+  route_name: entity.ap_genesys_deployment.collection
+  parent: ap_genesys_cloud.admin
+  weight: 0

@@ -1,0 +1,19 @@
+/**
+ * @file
+ * Admin form styles the module.
+ */
+
+
+.apgc-custom-fields td {
+  vertical-align: top;
+}
+
+.apgc-color-inline {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.apgc-color-hex {
+  max-width: 6em;
+}

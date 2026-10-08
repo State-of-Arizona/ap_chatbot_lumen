@@ -1,0 +1,9 @@
+services:
+  ap_genesys_cloud_chat.script_parser:
+    class: Drupal\ap_genesys_cloud_chat\ScriptParser
+  ap_genesys_cloud_chat.deployment_usage:
+    class: Drupal\ap_genesys_cloud_chat\DeploymentUsage
+    arguments: ['@entity_type.manager']
+  ap_genesys_cloud_chat.bootstrap_url:
+    class: Drupal\ap_genesys_cloud_chat\BootstrapUrl
+    arguments: ['@settings']

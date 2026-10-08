@@ -1,0 +1,10 @@
+ap_genesys_cloud.accessibility:
+  type: config_object
+  label: 'Genesys Cloud/API'
+  mapping:
+    contrast_enforcement:
+      type: string
+      label: 'Color contrast enforcement mode (none, warning, or block)'
+    wcag_level:
+      type: string
+      label: 'Target WCAG conformance level (AA or AAA; applies to both WCAG 2.1 and 2.2, which share the same contrast numbers)'

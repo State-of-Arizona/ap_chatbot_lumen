@@ -1,0 +1,26 @@
+{#
+/**
+ * @file
+ * The floating chat icon.
+ *
+ * Available variables:
+ * - icon_url: The uploaded custom chat icon's image URL (custom icon only).
+ * - icon_svg: Trusted inline SVG markup for the default icon, so its fill
+ *   can follow the configured Icon & Text Colour via `currentColor`.
+ * - icon_alttext: Alt text for the chat icon.
+ * - attributes: A Drupal Attribute object for the wrapper.
+ *
+ * A real <button> so the chat trigger is reachable and operable by
+ * keyboard/switch-device users (WCAG 2.1.1, 4.1.2), a plain clickable
+ * <div> is invisible to assistive technology and cannot receive focus.
+ * The accessible name comes from aria-label on the button itself, so the
+ * icon inside it is purely decorative (alt="" / aria-hidden).
+ */
+#}
+<button type="button" id="apgc-chat" aria-label="{{ icon_alttext }}"{{ attributes }}>
+  {% if icon_svg %}
+    <span aria-hidden="true">{{ icon_svg }}</span>
+  {% else %}
+    <img src="{{ icon_url }}" alt="" aria-hidden="true">
+  {% endif %}
+</button>

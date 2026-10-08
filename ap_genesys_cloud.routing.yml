@@ -1,0 +1,16 @@
+ap_genesys_cloud.admin:
+  path: '/admin/config/services/ap-genesys-cloud'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'Genesys Cloud/API Settings'
+  requirements:
+    _permission: 'administer ap genesys cloud settings'
+
+
+ap_genesys_cloud.accessibility_settings:
+  path: '/admin/config/services/ap-genesys-cloud/accessibility'
+  defaults:
+    _form: '\Drupal\ap_genesys_cloud\Form\GenesysAccessibilitySettingsForm'
+    _title: 'Genesys Cloud/API Accessibility Settings'
+  requirements:
+    _permission: 'administer ap genesys cloud settings'

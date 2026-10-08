@@ -1,0 +1,68 @@
+{#
+/**
+ * @file
+ * The chat lead-capture popup form.
+ *
+ * Available variables:
+ * - custom_fields: The site admin's configured lead-capture fields (label,
+ *   id, mapping, type, required, options), plus autocomplete_attribute and
+ *   input_type, both already worked out and validated by LumenChatBlock.
+ * - site_name: The site name, shown in the popup header.
+ * - custom_css_class: (optional) An admin-configured CSS class, already
+ *   validated as a single safe CSS identifier by GenesysChatBlock
+ *
+ * role="dialog" + aria-modal + aria-labelledby give this its name and
+ * role (WCAG 4.1.2); tabindex="-1" on the title lets js/chat.js move
+ * focus there when the popup opens, without adding it to the normal tab
+ * order (WCAG 2.4.3).
+ *
+ * autocomplete="off" on the form: answers can be personal information, and
+ * visitors may be on shared or public computers. A field asking for the
+ * visitor's own details (name, phone, email) instead carries its standard
+ * autocomplete value, so its purpose is programmatically determinable
+ * (WCAG 2.1 SC 1.3.5); every other field keeps "off".
+ */
+#}
+<div id="apgc-chat-popup" class="apgc-popup{{ custom_css_class ? ' ' ~ custom_css_class : '' }}" role="dialog" aria-modal="true" aria-labelledby="apgc-chat-popup-title">
+  <div class="apgc-popup__header">
+    <h5 class="apgc-popup__title" id="apgc-chat-popup-title" tabindex="-1">Chat with {{ site_name }}</h5>
+    <button type="button" id="apgc-close-chat-popup" class="apgc-popup__close" aria-label="{{ 'Close'|t }}">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form id="apgc-contact-form" class="apgc-form" novalidate autocomplete="off">
+    {% for field in custom_fields %}
+      <div class="apgc-form__group">
+        <label class="apgc-form__label" for="{{ field.id }}">{{ field.label }}</label>
+        {% if field.type == 'select' %}
+          <select
+            class="apgc-form__control"
+            id="{{ field.id }}"
+            name="{{ field.id }}"
+            autocomplete="{{ field.autocomplete_attribute }}"
+            {% if field.required %}required{% endif %}
+            aria-label="{{ field.label }}"
+          >
+            <option value="">{{ 'Choose an option'|t }}</option>
+            {% for option in field.options|split(',') %}
+              <option value="{{ option|trim }}">{{ option|trim }}</option>
+            {% endfor %}
+          </select>
+        {% else %}
+          <input
+            type="{{ field.input_type }}"
+            class="apgc-form__control"
+            id="{{ field.id }}"
+            name="{{ field.id }}"
+            placeholder="{{ field.required ? 'Required'|t : 'Optional'|t }}"
+            autocomplete="{{ field.autocomplete_attribute }}"
+            {% if field.required %}required{% endif %}
+            aria-label="{{ field.label }}"
+          />
+        {% endif %}
+        <div class="apgc-form__feedback">{{ 'This field is required.'|t }}</div>
+      </div>
+    {% endfor %}
+    <button type="submit" class="apgc-form__submit">{{ 'Submit'|t }}</button>
+  </form>
+</div>

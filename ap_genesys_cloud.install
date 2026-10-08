@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * @file
+ * Install and uninstall hooks for the Chat Bot - Genesys Cloud/API module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function ap_genesys_cloud_install($is_syncing) {
+  // Shared by every feature submodule.
+  \Drupal::configFactory()->getEditable('ap_genesys_cloud.accessibility')
+    ->set('contrast_enforcement', 'warning')
+    ->set('wcag_level', 'AA')
+    ->save();
+
+  // Feature submodules are hidden (no Extend checkbox of their own) and
+  // depend on this module, so they're installed from here.
+  if (!$is_syncing) {
+    \Drupal::service('module_installer')->install(['ap_genesys_cloud_chat']);
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function ap_genesys_cloud_uninstall() {
+  // Feature submodules depend on this module, so Drupal requires them to be
+  // uninstalled first; each cleans up its own config and files.
+  \Drupal::configFactory()->getEditable('ap_genesys_cloud.accessibility')->delete();
+}

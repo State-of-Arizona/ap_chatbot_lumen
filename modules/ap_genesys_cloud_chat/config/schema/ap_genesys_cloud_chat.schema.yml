@@ -1,0 +1,87 @@
+ap_genesys_cloud_chat.custom_field:
+  type: mapping
+  label: 'Custom lead-capture field'
+  mapping:
+    type:
+      type: string
+      label: 'Field type'
+    label:
+      type: label
+      label: 'Field label'
+    required:
+      type: boolean
+      label: 'Required'
+    id:
+      type: string
+      label: 'Field ID'
+    autocomplete:
+      type: string
+      label: 'HTML autocomplete value for the visitor''s own details (empty for off)'
+    mapping:
+      type: string
+      label: 'Genesys custom attribute mapping key'
+    options:
+      type: string
+      label: 'Comma-separated select options'
+    weight:
+      type: integer
+      label: 'Weight'
+
+ap_genesys_cloud_chat.deployment.*:
+  type: config_entity
+  label: 'Chat deployment'
+  mapping:
+    # 'string', not 'machine_name': that schema type only exists from
+    # Drupal 10.1 onwards, and this module still supports Drupal 9.
+    id:
+      type: string
+      label: 'Machine name'
+    label:
+      type: label
+      label: 'Label'
+    environment_name:
+      type: string
+      label: 'Genesys environment name'
+    deployment_id:
+      type: string
+      label: 'Genesys deployment ID'
+    bootstrap_url:
+      type: uri
+      label: 'Genesys bootstrap script URL'
+    custom_fields:
+      type: sequence
+      label: 'Custom lead-capture fields'
+      sequence:
+        type: ap_genesys_cloud_chat.custom_field
+    chat_icon:
+      type: sequence
+      label: 'Chat icon file'
+      sequence:
+        type: integer
+        label: 'File ID'
+    icon_alttext:
+      type: label
+      label: 'Chat icon alt text'
+    brand_color:
+      type: string
+      label: 'Button and header colour (hex)'
+    text_color:
+      type: string
+      label: 'Icon and text colour (hex)'
+    use_theme_colors:
+      type: boolean
+      label: 'Use theme default colours instead of brand_color/text_color'
+    custom_css_class:
+      type: string
+      label: 'Additional CSS class applied to the chat icon and popup'
+    genesys_manages_launcher:
+      type: boolean
+      label: 'Suppress this module''s own chat icon/popup because Genesys Cloud''s default launcher is managing it instead'
+
+block.settings.ap_genesys_cloud_block:
+  type: block_settings
+  label: 'Chat Icon Block'
+  mapping:
+    deployment:
+      type: string
+      label: 'Chat deployment profile'

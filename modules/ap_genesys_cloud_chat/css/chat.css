@@ -1,0 +1,192 @@
+/*
+ * ---
+ * Chat Bot (Genesys Cloud/API) styling.
+ * ---
+ */
+
+.apgc-chatbubble {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  font: inherit;
+}
+
+.apgc-chatbubble:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px #000;
+}
+
+.apgc-chatbubble.default,
+.apgc-chatbubble.custom-svg {
+  display: flex;
+  justify-content: center;
+  width: 75px;
+  height: 75px;
+  background-color: var(--apgc-brand-color, #4A5568);
+  color: var(--apgc-text-color, #fff);
+  border-radius: 40%;
+  padding: 10px 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.apgc-chatbubble.default svg,
+.apgc-chatbubble.custom-svg img {
+  width: 100%;
+  height: 100%;
+}
+
+.apgc-chatbubble.custom-icon {
+  width: 100px;
+  height: 100px;
+}
+
+.apgc-chatbubble.custom-icon img {
+  filter: drop-shadow(0 0 7px rgba(0, 0, 0, 0.5));
+}
+
+.apgc-popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 350px;
+  background-color: #fff;
+  border: 1px solid #6b7280;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: none;
+  z-index: 1000;
+}
+
+.apgc-popup.open {
+  display: block;
+}
+
+.apgc-popup__header {
+  background-color: var(--apgc-brand-color, #4A5568);
+  color: var(--apgc-text-color, #fff);
+  padding: 10px;
+  text-align: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.apgc-popup__header h5 {
+  color: var(--apgc-text-color, #fff);
+}
+
+.apgc-popup__title {
+  text-align: left;
+  margin: 0 2rem 0 0;
+}
+
+.apgc-popup__close {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  text-overflow: clip;
+  overflow: unset;
+  align-items: center;
+  display: inline-flex;
+  font-weight: 600;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 28px;
+  border-radius: 0;
+  cursor: pointer;
+  padding: 0 10px;
+  min-width: 24px;
+  min-height: 24px;
+  text-align: center;
+  color: var(--apgc-text-color, #fff);
+  background: transparent;
+  border: 0;
+}
+
+/*
+ * ---
+ * Lead-capture form (theme-agnostic — no Bootstrap dependency).
+ * ---
+ */
+
+.apgc-form {
+  padding: 10px;
+  color: #000;
+}
+
+.apgc-form__group {
+  margin-bottom: 15px;
+}
+
+.apgc-form__label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.apgc-form__control {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.apgc-form__feedback {
+  display: none;
+  color: #b00020;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.apgc-form.was-validated .apgc-form__control:invalid ~ .apgc-form__feedback {
+  display: block;
+}
+
+.apgc-form__submit {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  background-color: var(--apgc-brand-color, #4A5568);
+  color: var(--apgc-text-color, #fff);
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.apgc-form__submit:hover,
+.apgc-form__submit:focus {
+  filter: brightness(85%);
+}
+
+.apgc-popup__close:focus-visible,
+.apgc-form__submit:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px #000;
+}
+
+@media (max-width: 400px) {
+  .apgc-chatbubble.custom-icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .apgc-popup {
+    width: 100%;
+    right: 0;
+  }
+
+  .apgc-popup__close {
+    font-size: 26px;
+    padding: 8px 20px;
+  }
+}

@@ -1,0 +1,12 @@
+ap_genesys_cloud.admin:
+  title: 'Genesys Cloud/API Settings'
+  description: 'Configure Genesys Cloud features.'
+  route_name: ap_genesys_cloud.admin
+  parent: system.admin_config_services
+
+ap_genesys_cloud.accessibility:
+  title: 'Accessibility'
+  description: 'How strictly colour contrast is enforced, and against which WCAG level.'
+  route_name: ap_genesys_cloud.accessibility_settings
+  parent: ap_genesys_cloud.admin
+  weight: 10

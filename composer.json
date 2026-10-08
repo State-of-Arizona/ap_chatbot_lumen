@@ -1,0 +1,11 @@
+{
+  "name": "drupal/ap_genesys_cloud",
+  "description": "Chat bot using AZNET II and Lumen's recommended configuration for sites using Genesys Cloud web messaging.",
+  "type": "drupal-ap-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=8.1",
+    "drupal/core": "^9.3 || ^10 || ^11",
+    "enshrined/svg-sanitize": "^1.0"
+  }
+}

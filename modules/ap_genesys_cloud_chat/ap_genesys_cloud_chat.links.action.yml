@@ -1,0 +1,5 @@
+entity.ap_genesys_deployment.add_form:
+  route_name: entity.ap_genesys_deployment.add_form
+  title: 'Add chat deployment'
+  appears_on:
+    - entity.ap_genesys_deployment.collection

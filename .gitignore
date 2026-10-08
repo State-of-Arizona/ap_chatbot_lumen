@@ -4,3 +4,7 @@
 
 #Ignore IDE files
 .idea
+/.idea/
+# Composer, when this folder is its own repository.
+/vendor/
+composer.lock

@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for the chat bot feature of Chat Bot (Lumen API).
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function ap_genesys_cloud_chat_theme() {
+  return [
+    'ap_genesys_cloud_icon' => [
+      'variables' => [
+        'icon_url' => NULL,
+        'icon_svg' => NULL,
+        'icon_alttext' => NULL,
+        'attributes' => NULL,
+      ],
+      'template' => 'ap-genesys-cloud-icon',
+    ],
+    'ap_genesys_cloud_modal' => [
+      'variables' => [
+        'custom_fields' => [],
+        'site_name' => NULL,
+        'custom_css_class' => NULL,
+      ],
+      'template' => 'ap-genesys-cloud-modal',
+    ],
+  ];
+}
